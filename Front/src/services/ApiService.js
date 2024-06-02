@@ -8,8 +8,8 @@ const apiService = axios.create({
 
 const get = (url, params) => apiService.get(url, { params });
 const post = (url, data) => apiService.post(url, { params }, data);
-const update = (url, id, data) => apiService.put(url, { params }, data);
-const delet = (url, id) => apiService.delete(url, id);
+const update = (url, id, data) => apiService.put(url, { params }, id, data);
+const delet = (url, id) => apiService.delete(url, { params }, id);
 
 
 export { get, post, update, delet };

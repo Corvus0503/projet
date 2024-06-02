@@ -24,7 +24,6 @@ import Swal from 'sweetalert2'
 import { Span } from "../../components/Typography";
 import SearchIcon from '@mui/icons-material/Search';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import NewProduits from "./NewProduct";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -94,27 +93,29 @@ const Search = styled('div')(({ theme }) => ({
       background: bgColor,
       textTransform: "capitalize",
     }));
-const ProduitsList = () => {
+
+const OrderList = () => {
+
     const [page, setPage] = useState(0);
     const [user, setUser] = useState(null);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [productList, setProductList] = useState([]);
+    const [orderList, setOrderList] = useState([]);
     const [shouldOpenConfirmationDialog, setShouldOpenConfirmationDialog] = useState(false);
     const [isOpen, setIsOpen] = useState(false)
 
-  const chargerListProduct = async () => {
+  const chargerListOrder = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/produits');
-      setProductList(response.data);
-      console.log("data loaded");
+      const response = await axios.get('http://localhost:8080/api/orders');
+      setOrderList(response.data);
+      console.log("data loaded", orderList);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const deleteProduct = id => {
-    axios.delete(`http://localhost:8080/api/produits/${id}`).then(response => {
-      chargerListProduct()
+  const deleteOrder = id => {
+    axios.delete(`http://localhost:8080/api/orders/${id}`).then(response => {
+      chargerListOrder()
       console.log('Le USer a été supprimé avec succès.');
       Swal.fire(
         'Supprimé!',
@@ -128,17 +129,17 @@ const ProduitsList = () => {
   const closeModal = () => setIsOpen(false)
 
   useEffect(() => {
-    chargerListProduct();
+    chargerListOrder();
   }, []);
 
   const { palette } = useTheme();
   const bgGreen = "rgba(9, 182, 109, 1)";
   const bgError = palette.error.main;
-  const bgSecondary = palette.secondary.main;
+  const bgSecondary = "rgb(235, 210, 51)";
 
   const renderStatus = (status) => {
-    if (status === "Activé") return <StyledSpan bgColor={bgGreen}>{status}</StyledSpan>;
-    if (status === "Desactivé") return <StyledSpan bgColor={bgError}>{status}</StyledSpan>;
+    if (status === "en attente") return <StyledSpan bgColor={bgSecondary}>{status}</StyledSpan>;
+    if (status === "Livré") return <StyledSpan bgColor={bgGreen}>{status}</StyledSpan>;
   };
 
   const handleDeleteProduct = (user) => {
@@ -153,20 +154,20 @@ const ProduitsList = () => {
       confirmButtonText: 'Supprimer'
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteProduct(user)
+        deleteOrder(user)
       }
     })
   };
 
   const handleConfirmationResponse = () => {
-    deleteProduct(user)
+    deleteOrder(user)
     handleDialogClose()
   };
 
   const handleDialogClose = () => {
     //setShouldOpenEditorDialog(false);
     setShouldOpenConfirmationDialog(false);
-    chargerListProduct();
+    chargerListOrder();
   };
   
     const handleChangePage = (_, newPage) => {
@@ -198,29 +199,23 @@ const ProduitsList = () => {
     const [searchTerm, setSearchTerm] = useState("");
 
       // Filter the adminList based on the search term
-  const filteredAdminList = productList.filter(
+  const filteredAdminList = orderList.filter(
     (item) =>
-      item.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.deliveryAddress.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.id.includes(searchTerm) ||
-      item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.prix.toLowerCase().includes(searchTerm.toLowerCase())
+      item.totalAmount.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.status.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
 
-    console.log(isOpen)
-    return (
-  
-      <Container className="mt-5">
+  return (
+    <Container className="mt-5">
         <div className="m-5 mt-3 mb-3">
         <div className="breadcrumb">
-            <Breadcrumb routeSegments={[{ name: "Liste des Produits" }]} />
-        </div>
-        <div className=" text-start mb-3">
-          <button className="btn btn-primary " onClick={openModal} > <AddCircleIcon/> Nouveau Produit </button>
-          <NewProduits isOpen={isOpen} onClose={closeModal} chargerListProduct={chargerListProduct}/>
+            <Breadcrumb routeSegments={[{ name: "Liste des Commandes" }]} />
         </div>
         <div className="container mt-5 p-5 card shadow">
-        <h1 align="left"> Liste des produits </h1>
+        <h1 align="left"> Liste des Commandes </h1>
           <hr />
           <div style={{paddingLeft: "80%"}}>
           <div style={{width: "200px", right: 0}} className="text-end">
@@ -247,9 +242,9 @@ const ProduitsList = () => {
               <TableRow>
                 {/* <TableCell align="center"></TableCell> */}
                 <TableCell align="center">ID</TableCell>
-                <TableCell align="left">Nom</TableCell>      
-                <TableCell align="left">Description</TableCell>
-                <TableCell align="left">Prix</TableCell>
+                <TableCell align="left">Adresse</TableCell>      
+                <TableCell align="left">Montant</TableCell>
+                <TableCell align="left">Status</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead> 
@@ -258,17 +253,18 @@ const ProduitsList = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((List) => (
 
-                  <TableRow key={List.id_produit}>
+                  <TableRow key={List.id}>
                 
-                    <TableCell align="center">{List.id_produit}</TableCell>
-                    <TableCell align="left">{List.nom}</TableCell>          
-                    <TableCell align="left">{List.description}</TableCell>
-                    <TableCell align="left">{List.prix}</TableCell>
+                    <TableCell align="center">{List.id}</TableCell>
+                    <TableCell align="left">{List.deliveryAddress}</TableCell>          
+                    <TableCell align="left">{List.totalAmount}</TableCell>
+                    {/* <TableCell align="left">{List.status}</TableCell> */}
+                    <TableCell align="left">{renderStatus(List.status)}</TableCell>
                     <TableCell align="center">
                       <IconButton>
                         {/* <TestModal List={List} productList={productList} chargerListProduct={chargerListProduct}/> */}
                       </IconButton>
-                      <IconButton onClick={() => handleDeleteProduct(List.id_produit)}>
+                      <IconButton onClick={() => handleDeleteProduct(List.id)}>
                         
                         <DeleteIcon color="error"/>
                       </IconButton>
@@ -283,7 +279,7 @@ const ProduitsList = () => {
             page={page}
             component="div"
             rowsPerPage={rowsPerPage}
-            count={productList.length}
+            count={orderList.length}
             onPageChange={handleChangePage}
             rowsPerPageOptions={[5, 10, 25]}
             onRowsPerPageChange={handleChangeRowsPerPage}
@@ -303,11 +299,7 @@ const ProduitsList = () => {
         </div>
       
       </Container>
-      
-      
-  
-      
-    );
+  )
 }
 
-export default ProduitsList
+export default OrderList

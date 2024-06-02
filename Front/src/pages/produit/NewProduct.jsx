@@ -119,89 +119,89 @@ const NewProduits = ({isOpen, onClose, chargerListProduct}) => {
         <Container>            
               <ValidatorForm onError={() => null} onSubmit={handleSubmit} >
                   <div className=" card center shadow p-5">
-                  <h1 align="left"> Ajout d'un nouveau Division </h1>
+                  <h1 align="left"> Ajout d'un nouveau produit </h1>
                   <hr />
                       <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
                         
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handlePhotoChange}
-                        style={{ display: 'block', marginBottom: '16px' }}
-                      />
-
-                      {imagePreview && (
-                        <
-                          img src={imagePreview} 
-                          alt="Image Preview" 
-                          style={{ 
-                            width: '50px',
-                            height:' 50px', 
-                            marginBottom: '16px' 
-                          }} 
-                        />
-                      )}
-                      <TextField
-                          type="text"
-                          name="nom"
-                          label="Nom"
-                          placeholder="Saisir ici le code le nom du produit...."
-                          onChange={handleChange}
-                          value={product.nom}
-                          validators={["required","minStringLength: 1", "maxStringLength: 9"]}
-                          errorMessages={["this field is required"]}
-                        />              
-
-                        <TextField
-                          type="text"
-                          name="description"
-                          id="standard-basic"
-                          placeholder="Saisir ici la description...."
-                          value={product.description}
-                          onChange={handleChange}
-                          errorMessages={["this field is required"]}
-                          label="Description"
-                          validators={["required", "minStringLength: 1", "maxStringLength: 9"]}
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handlePhotoChange}
+                          style={{ display: 'block', marginBottom: '16px' }}
                         />
 
-                        <TextField
-                          type="text"
-                          name="prix"
-                          id="standard-basic"
-                          value={product.prix}
-                          onChange={handleChange}
-                          errorMessages={["this field is required"]}
-                          placeholder="Saisir ici le prix...."
-                          label="Prix"
-                          validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
-                        />
-
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                          <DatePicker
-                            value={date}
-                            onChange={handleDateChange}
-                            renderInput={(props) => (
-                              <TextField
-                                {...props}
-                                label="Date picker"
-                                id="mui-pickers-date"
-                                sx={{ mb: 2, width: "100%" }}
-                              />
-                            )}
+                        {imagePreview && (
+                          <
+                            img src={imagePreview} 
+                            alt="Image Preview" 
+                            style={{ 
+                              width: '50px',
+                              height:' 50px', 
+                              marginBottom: '16px' 
+                            }} 
                           />
-                        </LocalizationProvider>
+                        )}
+                        <TextField
+                            type="text"
+                            name="nom"
+                            label="Nom"
+                            placeholder="Saisir ici le code le nom du produit...."
+                            onChange={handleChange}
+                            value={product.nom}
+                            validators={["required","minStringLength: 1", "maxStringLength: 9"]}
+                            errorMessages={["this field is required"]}
+                          />              
 
-                        <div className="text-center">
+                          <TextField
+                            type="text"
+                            name="description"
+                            id="standard-basic"
+                            placeholder="Saisir ici la description...."
+                            value={product.description}
+                            onChange={handleChange}
+                            errorMessages={["this field is required"]}
+                            label="Description"
+                            validators={["required", "minStringLength: 1", "maxStringLength: 9"]}
+                          />
 
-                        <Button color="primary" className="me-2 "  variant="outlined" type="submit">
-                            Enregister
-                          </Button>
-                          <Button color="secondary" className=" me-2 ms-1 ps-4 pe-4" variant="outlined" onClick={handleCloseModal}>
-                            Fermer
-                          </Button>
-                          
-                        </div>
-                    </Grid>
+                          <TextField
+                            type="text"
+                            name="prix"
+                            id="standard-basic"
+                            value={product.prix}
+                            onChange={handleChange}
+                            errorMessages={["this field is required"]}
+                            placeholder="Saisir ici le prix...."
+                            label="Prix"
+                            validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
+                          />
+
+                          <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                              value={date}
+                              onChange={handleDateChange}
+                              renderInput={(props) => (
+                                <TextField
+                                  {...props}
+                                  label="Date picker"
+                                  id="mui-pickers-date"
+                                  sx={{ mb: 2, width: "100%" }}
+                                />
+                              )}
+                            />
+                          </LocalizationProvider>
+
+                          <div className="text-center">
+
+                          <Button color="primary" className="me-2 "  variant="outlined" type="submit">
+                              Enregister
+                            </Button>
+                            <Button color="secondary" className=" me-2 ms-1 ps-4 pe-4" variant="outlined" onClick={handleCloseModal}>
+                              Fermer
+                            </Button>
+                            
+                          </div>
+                      </Grid>
                   </div>
 
               </ValidatorForm>

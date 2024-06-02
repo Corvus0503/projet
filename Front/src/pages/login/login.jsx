@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "../../styles/login.css"
-import LoginPhoto from"../../images/account-validation-bg-mob.png"
-import LoginAvatar from"../../images/blog-wp-login.png"
 import IconButton from "@material-ui/core/IconButton";
 //import InputLabel from "@material-ui/core/InputLabel";
 import Visibility from "@material-ui/icons/Visibility";
@@ -14,7 +12,7 @@ import { useAuth } from "../../routes/authProvider";
 // import io from "socket.io-client";
 import axios from "axios"
 import Swal from 'sweetalert2'
-
+import logo from "../../images/res-logo.png";
 
 const Login = ({isConn, setIsConn, saveCon, user, setUser, getCon }) =>{
     const navigate = useNavigate();
@@ -85,24 +83,26 @@ const Login = ({isConn, setIsConn, saveCon, user, setUser, getCon }) =>{
         <div className="login">
 
                 <form className="login-form">
-
-                    <img src={LoginAvatar} alt="" />
+                    <div className="item-box">
+                        <img src={logo} alt="logo" />
+                        
+                        <div className="input-box">
+                            <Input style={{color:'rgb(13, 13, 13)'}} value={infoCon.email} required onChange={e => setInfoCon({...infoCon, username : e.target.value})} type="text" placeholder="Nom d'utitilisateur....." className="log-input"/>
+                        </div>
+                        <div className="input-box">
+                            <Input style={{color:'rgb(13, 13, 13)'}} value={infoCon.password} required onChange={e => setInfoCon({...infoCon, password : e.target.value})} type={isShow ? "text" : "password"} placeholder="Mot de passe......." 
+                            endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={showMdp}>
+                                        {isShow ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            } 
+                            className="log-input"></Input>
+                        </div>
+                        <button onClick={connexion} className="log-btn">Connexion</button>
+                    </div>
                     
-                    <div className="input-box">
-                        <Input style={{color:'white'}} value={infoCon.email} required onChange={e => setInfoCon({...infoCon, username : e.target.value})} type="text" placeholder="Nom d'utitilisateur....." className="log-input"/>
-                    </div>
-                    <div className="input-box">
-                        <Input style={{color:'white'}} value={infoCon.password} required onChange={e => setInfoCon({...infoCon, password : e.target.value})} type={isShow ? "text" : "password"} placeholder="Mot de passe......." 
-                        endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton onClick={showMdp}>
-                                    {isShow ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        } 
-                        className="log-input"></Input>
-                    </div>
-                    <button onClick={connexion} className="btn btn-primary mt-5">Connexion</button>
                 </form>
         </div>
     )

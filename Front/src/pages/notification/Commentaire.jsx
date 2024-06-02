@@ -12,17 +12,17 @@ const Comment = ({ comment, isYou, deleteNot, redirection }) => {
 
   return (
     <div onClick={() => redirection(comment.ID_NOT)} className="Comment">
-    <div className="Comment-header">
-      <div className="Comment-avatar">
-        {/* <img src={require(`../..uploads/${comment.PHOTO}`)} alt={comment.NOM_UTIL_AG} /> */}
+      <div className="Comment-header">
+        <div className="Comment-avatar">
+          {/* <img src={require(`../..uploads/${comment.PHOTO}`)} alt={comment.NOM_UTIL_AG} /> */}
+        </div>
+        <span className="Comment-author">
+          {comment.NOM_UTIL_AG}
+        </span>
+        <span className="Comment-time" >{comment.DATE_NOT}<button style={bDtyle} onClick={() => deleteNot(comment.ID_NOT)} className="Comment-body">X</button></span>
       </div>
-      <span className="Comment-author">
-        {comment.NOM_UTIL_AG}
-      </span>
-      <span className="Comment-time" >{comment.DATE_NOT}<button style={bDtyle} onClick={() => deleteNot(comment.ID_NOT)} className="Comment-body">X</button></span>
-    </div>
 
-    <div className="Comment-body">{comment.BODY_NOT} </div>
+      <div className="Comment-body">{comment.BODY_NOT} </div>
     
   </div>
   )

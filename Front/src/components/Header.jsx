@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Container } from "reactstrap";
 import logo from "../images/res-logo.png";
+import CardBtn from '../images/shopping_cart_25px.png'
 import '../styles/header.css'
 import { NavLink, Link } from "react-router-dom";
 //import { useSelector, useDispatch } from "react-redux";
@@ -17,11 +18,11 @@ const nav__links = [
       path: "/cartes",
     },
     {
-      display: "Contact",
-      path: "/contact",
+      display: "Inscription",
+      path: "/inscription",
     },
   ];
-const Header = () => {
+const Header = ({togleNot, cartItems}) => {
     const menuRef = useRef(null);
     const headerRef = useRef(null);
     // const totalQuantity = useSelector((state) => state.cart.totalQuantity);
@@ -86,9 +87,9 @@ const Header = () => {
 
             {/* ======== nav right icons ========= */}
             <div className="nav__right d-flex align-items-center gap-4">
-                <span className="cart__icon" onClick={toggleCart}>
-                <i className="ri-shopping-basket-line"></i>
-                <span className="cart__badge">2</span>
+                <span className="cart__icon" onClick={togleNot}>
+                <i className="ri-shopping-basket-line"><img src={CardBtn} alt="logo" /></i>
+                <span className="cart__badge">{cartItems.length}</span>
                 </span>
                 
                 <span className="mobile__menu" onClick={toggleMenu}>

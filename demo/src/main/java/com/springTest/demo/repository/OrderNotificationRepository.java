@@ -4,15 +4,15 @@
  */
 package com.springTest.demo.repository;
 
-import com.springTest.demo.model.Product;
+import com.springTest.demo.model.OrderNotification;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 /**
  *
  * @author ASUS
  */
 @Repository
-public interface ProduitRepository extends JpaRepository<Product, Long> {
+public interface OrderNotificationRepository extends JpaRepository<OrderNotification, Long> {
 }
+

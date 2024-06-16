@@ -13,11 +13,11 @@ import {
   styled,
   Select,
   MenuItem,
-  InputLabel
+  InputLabel,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import axios from "axios"
+import axios from "axios";
 
 const TextField = styled(TextValidator)(() => ({
   width: "100%",
@@ -37,7 +37,7 @@ const MenuProps = {
 
 const ModUser = () => {
   const [state, setState] = useState({ date: new Date() });
-  const [confirmMdp, setConfirmMdp] = useState("")
+  const [confirmMdp, setConfirmMdp] = useState("");
   const [modUser, setModUser] = useState({
     MATRICULE: "",
     FONCTION_AG: "",
@@ -52,34 +52,33 @@ const ModUser = () => {
     PHOTO: "",
     GENRE: "",
     ACTIVATION: "",
-    CODE_DIVISION: ""
-})
+    CODE_DIVISION: "",
+  });
 
-const addNewUser = async () => {
-  try {
-    await axios.put('http://localhost:8080/user', modUser);
-    setModUser({
-      MATRICULE: "",
-      FONCTION_AG: "",
-      MAIL_AG: "",
-      NOM_AG: "",
-      NOM_UTIL_AG: "",
-      TYPE_AG: "",
-      PRENOM_AG: "",
-      ADRESSE_AG: "",
-      TEL_AG: "",
-      PASSWORD: "",
-      PHOTO: "",
-      GENRE: "",
-      ACTIVATION: "",
-      CODE_DIVISION: ""
-    });
-    console.log('Le USer a été ajouté avec succès.');
-  } catch (error) {
-    console.error(error);
-  }
-};
-
+  const addNewUser = async () => {
+    try {
+      await axios.put("http://localhost:8080/user", modUser);
+      setModUser({
+        MATRICULE: "",
+        FONCTION_AG: "",
+        MAIL_AG: "",
+        NOM_AG: "",
+        NOM_UTIL_AG: "",
+        TYPE_AG: "",
+        PRENOM_AG: "",
+        ADRESSE_AG: "",
+        TEL_AG: "",
+        PASSWORD: "",
+        PHOTO: "",
+        GENRE: "",
+        ACTIVATION: "",
+        CODE_DIVISION: "",
+      });
+      console.log("Le USer a été ajouté avec succès.");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
@@ -91,8 +90,8 @@ const addNewUser = async () => {
   }, [state.password]);
 
   const handleSubmit = (event) => {
-    console.log(modUser)
-    addNewUser()
+    console.log(modUser);
+    addNewUser();
   };
 
   const handleChange = (e) => {
@@ -101,20 +100,23 @@ const addNewUser = async () => {
 
   const handleDateChange = (date) => setState({ ...state, date });
 
-
   return (
     <div className="container">
       <ValidatorForm onSubmit={handleSubmit} onError={() => null}>
         <Grid container spacing={6}>
           <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
-          <TextField
+            <TextField
               type="text"
               name="MATRICULE"
               value={modUser.MATRICULE}
               onChange={handleChange}
               errorMessages={["this field is required"]}
               label="Matricule"
-              validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
+              validators={[
+                "required",
+                "minStringLength: 4",
+                "maxStringLength: 9",
+              ]}
             />
 
             <TextField
@@ -124,7 +126,11 @@ const addNewUser = async () => {
               onChange={handleChange}
               errorMessages={["this field is required"]}
               label="Code division"
-              validators={["required", "minStringLength: 1", "maxStringLength: 9"]}
+              validators={[
+                "required",
+                "minStringLength: 1",
+                "maxStringLength: 9",
+              ]}
             />
 
             <TextField
@@ -135,12 +141,16 @@ const addNewUser = async () => {
               onChange={handleChange}
               errorMessages={["this field is required"]}
               label="Fonction"
-              validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
+              validators={[
+                "required",
+                "minStringLength: 4",
+                "maxStringLength: 9",
+              ]}
             />
 
             <FormControl>
-            <InputLabel id="demo-simple-select-label">Type AG</InputLabel>
-            <Select
+              <InputLabel id="demo-simple-select-label">Type AG</InputLabel>
+              <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={modUser.TYPE_AG}
@@ -154,7 +164,6 @@ const addNewUser = async () => {
               </Select>
             </FormControl>
 
-
             <TextField
               type="text"
               name="NOM_UTIL_AG"
@@ -163,7 +172,11 @@ const addNewUser = async () => {
               onChange={handleChange}
               errorMessages={["this field is required"]}
               label="Nom d'utilisteur"
-              validators={["required", "minStringLength: 1", "maxStringLength: 9"]}
+              validators={[
+                "required",
+                "minStringLength: 1",
+                "maxStringLength: 9",
+              ]}
             />
 
             <TextField
@@ -184,7 +197,7 @@ const addNewUser = async () => {
               value={modUser.PRENOM_AG}
               validators={["required"]}
               errorMessages={["this field is required"]}
-            />  
+            />
 
             <TextField
               type="email"
@@ -195,20 +208,18 @@ const addNewUser = async () => {
               validators={["required", "isEmail"]}
               errorMessages={["this field is required", "email non valide"]}
             />
-
-            
           </Grid>
 
           <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
             <TextField
-                type="text"
-                name="ADRESSE_AG"
-                label="Adresse"
-                onChange={handleChange}
-                value={modUser.ADRESSE_AG}
-                errorMessages={["this field is required"]}
-                validators={["required"]}
-              />
+              type="text"
+              name="ADRESSE_AG"
+              label="Adresse"
+              onChange={handleChange}
+              value={modUser.ADRESSE_AG}
+              errorMessages={["this field is required"]}
+              validators={["required"]}
+            />
 
             <TextField
               type="text"
@@ -236,7 +247,10 @@ const addNewUser = async () => {
               onChange={(e) => setConfirmMdp(e.target.value)}
               value={confirmMdp}
               validators={["required", "isPasswordMatch"]}
-              errorMessages={["this field is required", "password didn't match"]}
+              errorMessages={[
+                "this field is required",
+                "password didn't match",
+              ]}
             />
             <RadioGroup
               row
@@ -258,7 +272,6 @@ const addNewUser = async () => {
                 labelPlacement="end"
                 control={<Radio color="secondary" />}
               />
-
             </RadioGroup>
             <RadioGroup
               row
@@ -280,12 +293,16 @@ const addNewUser = async () => {
                 labelPlacement="end"
                 control={<Radio color="secondary" />}
               />
-
             </RadioGroup>
           </Grid>
         </Grid>
 
-        <Button onClick={handleSubmit} color="primary" variant="contained" type="submit">
+        <Button
+          onClick={handleSubmit}
+          color="primary"
+          variant="contained"
+          type="submit"
+        >
           {/*<Icon>send</Icon>*/}
           Enregister
         </Button>

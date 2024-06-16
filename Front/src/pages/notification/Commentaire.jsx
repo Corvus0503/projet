@@ -11,18 +11,18 @@ const bDtyle = {
 const Comment = ({ comment, isYou, deleteNot, redirection }) => {
 
   return (
-    <div onClick={() => redirection(comment.ID_NOT)} className="Comment">
+    <div onClick={() => redirection(comment.id)} className="Comment">
       <div className="Comment-header">
         <div className="Comment-avatar">
           {/* <img src={require(`../..uploads/${comment.PHOTO}`)} alt={comment.NOM_UTIL_AG} /> */}
         </div>
         <span className="Comment-author">
-          {comment.NOM_UTIL_AG}
+          Commande recu
         </span>
-        <span className="Comment-time" >{comment.DATE_NOT}<button style={bDtyle} onClick={() => deleteNot(comment.ID_NOT)} className="Comment-body">X</button></span>
+        <span className="Comment-time" >Maintenat<button style={bDtyle} onClick={() => deleteNot(comment.id)} className="Comment-body">X</button></span>
       </div>
 
-      <div className="Comment-body">{comment.BODY_NOT} </div>
+      <div className="Comment-body">{comment.delivery_address} </div>
     
   </div>
   )

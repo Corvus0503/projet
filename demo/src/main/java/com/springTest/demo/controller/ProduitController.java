@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.springTest.demo.model.Produit;
+import com.springTest.demo.model.Product;
 import com.springTest.demo.exception.ResourceNotFoundException;
 import com.springTest.demo.repository.ProduitRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -45,17 +45,17 @@ public class ProduitController {
 	
 	// get all produits
 	@GetMapping("/produits")
-	public List<Produit> getAllProduit(){
+	public List<Product> getAllProduit(){
 		return ProduitRepository.findAll();
 	}		
 	
 	// createproduits rest api
 	@PostMapping("/produits")
-	public Produit createProduit(@RequestParam("photo") MultipartFile photo,
+	public Product createProduit(@RequestParam("photo") MultipartFile photo,
                                  @RequestParam("nom") String nom,
                                  @RequestParam("description") String description,
                                  @RequestParam("prix") int prix) throws IOException {
-            Produit produit = new Produit(nom, description, prix);
+            Product produit = new Product(nom, description, prix);
 
             // Save photo
             if (photo != null && !photo.isEmpty()) {
@@ -71,8 +71,8 @@ public class ProduitController {
 	
 	// getproduits by id rest api
 	@GetMapping("/produits/{id}")
-	public ResponseEntity<Produit> getProduitById(@PathVariable Long id) {
-		Produit employee = ProduitRepository.findById(id)
+	public ResponseEntity<Product> getProduitById(@PathVariable Long id) {
+		Product employee = ProduitRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Produit not exist with id :" + id));
 		return ResponseEntity.ok(employee);
 	}
@@ -80,22 +80,22 @@ public class ProduitController {
 	// updateproduits rest api
 	
 	@PutMapping("/produits/{id}")
-	public ResponseEntity<Produit> updateProduit(@PathVariable Long id, @RequestBody Produit userDetails){
-		Produit produit = ProduitRepository.findById(id)
+	public ResponseEntity<Product> updateProduit(@PathVariable Long id, @RequestBody Product userDetails){
+		Product produit = ProduitRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Produit not exist with id :" + id));
 		
 		produit.setNom(userDetails.getNom());
 		produit.setDescription(userDetails.getDescription());
 		produit.setPrix(userDetails.getPrix());
 		
-		Produit updatedEmployee = ProduitRepository.save(produit);
+		Product updatedEmployee = ProduitRepository.save(produit);
 		return ResponseEntity.ok(updatedEmployee);
 	}
 	
 	// deleteproduits rest api
 	@DeleteMapping("/produits/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteProduit(@PathVariable Long id){
-		Produit produit = ProduitRepository.findById(id)
+		Product produit = ProduitRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Produit not exist with id :" + id));
 		
 		ProduitRepository.delete(produit);

@@ -11,7 +11,13 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.springTest.demo", "com.springTest.demo.repository", "com.springTest.demo.controller"})
+@ComponentScan(basePackages = {
+    "com.springTest.demo", 
+    "com.springTest.demo.service", 
+    "com.springTest.demo.repository", 
+    "com.springTest.demo.configuration", 
+    "com.springTest.demo.controller"
+})
 @RestController
 
 public class ProjetJavaApplication {

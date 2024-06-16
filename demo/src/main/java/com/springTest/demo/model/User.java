@@ -19,7 +19,7 @@ import jakarta.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "nom", nullable = false)
@@ -47,19 +47,6 @@ public class User {
     private String type;
     
 
-    @ManyToMany(cascade = {
-        CascadeType.ALL
-    })
-    @JoinTable(
-        name = "commande",
-        joinColumns = {
-            @JoinColumn(name = "id")
-        },
-        inverseJoinColumns = {
-            @JoinColumn(name = "id_produit")
-        }   
-    )
-    Set < Produit > produits = new HashSet < Produit > ();
     public User() {
 
     }

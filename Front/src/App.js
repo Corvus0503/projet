@@ -16,6 +16,7 @@ import Comments from './pages/notification/Comments';
 import MainDash from './pages/cliaentPage/MainDash';
 import ProduitsList from './pages/produit/ProductList';
 import OrderList from './pages/order/OrderList';
+import Dashboard from './pages/dashboard/Dashboard';
 
 // import io from "socket.io-client";
 
@@ -53,27 +54,8 @@ function App() {
     
   }, [])
 
-// const socket = io("http://localhost:8080");
 
-// useEffect(() => {
-//   socket.on("new-comment", (data) => {
-//     console.log("Received new-comment event:", data);
-//     const { comment } = data;
-//     if (comment) {
-//       console.log(comment);
-//       setComments((comments) => [...comments, comment]);
-//     }
-//   });
-  
-
-//   return () => {
-//     socket.off("new-comment");
-//   };
-// }, [setComments, socket, user]);
-
-
-
- console.log(user)
+//  console.log(user)
  console.log(comments)
 
   return (
@@ -97,6 +79,7 @@ function App() {
               <Route path="/Profile" element={<Profile user={user} />} />
               <Route path="/Comments" element={<Comments comments={comments} setComments={setComments} user={user} IsOpenNot={IsOpenNot} />} />
               <Route element={<ProtectedRoute redirectPath="/Dashboard" user={user} perm={'admin'}/>}>
+                <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/Signup" element={<Signup />} />
                 <Route path="/UserList" element={<UserList />} />
                 <Route path="/Produit" element={<ProduitsList />} />
